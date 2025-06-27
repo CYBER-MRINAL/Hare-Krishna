@@ -120,6 +120,17 @@ Always run as **root or with sudo**, and make sure to:
 
 ---
 
+## 🛠️ Fixing Proxy setting
+
+1. `FOR SYSTEM WIDE TOR ROUTING` -> Go to `settings/control center` > `Network` > Look for `proxy` > `turn on` if it is off by defult and switch to `manual` > Add `127.0.0.1` at socks host and add `9050` on port > Save it > Your system now run on `tor`.
+
+2. `FOR BROWSER ONLY` -> Open your favourite browser > Go to `settings` > Search for `network` > There you can see a `Network Settings` > Open it > Switch to `Manual proxy configuration` > Add `127.0.0.1` and port `9050` on `SOCKS Host` only > choose `SOCKS v4` & `SOCKS v5` both > Save it by clicking on `OK` button > Now you are ready to go. 
+
+- Now if you want stop this then just `turn off proxy on your settings` & for browser switch to `Use system proxy settings`
+### Note - Just a reminder when you set `Proxy` system wide then if you select with your `setting or control center` then if you choose on your browser `Use system proxy settings` this setting on your `network setting` your browser also then use `tor` network.
+
+--- 
+
 ## 🧠 Contributions
 
 Pull requests, improvements, and suggestions are always welcome.
