@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ─────────────────────────────────────────────────────────────────
-# HARE-KRISHNA TOOL INSTALLER v1.1
+# HARE-KRISHNA TOOL INSTALLER v1.2
 # Author: CYBER-MRINAL
 # Description: Installs all dependencies and sets up hare-krishna3.sh
 # ─────────────────────────────────────────────────────────────────
@@ -45,7 +45,7 @@ install_missing_packages() {
             PKG_INSTALL="sudo apt-get install -y"
             sudo apt-get update
             ;;
-        arch|manjaro|artix)
+        arch|manjaro|artix|athenaos)
             PKG_INSTALL="sudo pacman -S --noconfirm"
             sudo pacman -Sy
             ;;
@@ -114,4 +114,3 @@ main() {
 }
 
 main
-
