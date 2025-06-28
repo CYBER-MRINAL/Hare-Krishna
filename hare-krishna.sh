@@ -29,7 +29,7 @@ log() {
 display_banner() {
     echo -e "\033[1;36m"
     echo "       ╔════════════════════════════════════════════╗"
-    echo "       ║            🔒 HARE KRISHNA  v1.1           ║"
+    echo "       ║            🔒 HARE KRISHNA  v1.2           ║"
     echo "       ╠════════════════════════════════════════════╣"
     echo "       ║  MAC/IP randomizer & Tor-based proxy tool  ║"
     echo "       ╚════════════════════════════════════════════╝"
@@ -195,7 +195,7 @@ show_version() {
 
 check_ip_tor() {
     echo -e "\033[1;33m"
-    echo "  ->> Wait for 15 secound. Tor can take some time" 
+    echo "  ->> Wait for 15 secound. Tor can take some time. Your IP address will show." 
     echo -e "\033[0m"
     sleep 5
     tor_ip=$(curl --max-time 10 -s --proxy socks5h://127.0.0.1:9050 http://api.ipify.org)
