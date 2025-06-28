@@ -55,7 +55,7 @@ Options:
 
 Example:
   sudo bash $0 -st
-  sudo bash $0 -cmc -m 00:11:22:33:44:55
+  sudo bash $0 -cm -m 00:11:22:33:44:55
 Else:
   sudo bash hare-krishna.sh -h (to see the help)
 EOF
