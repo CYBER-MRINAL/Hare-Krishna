@@ -1,4 +1,4 @@
-# 🔒 HARE KRISHNA - Anonymizer Tool v1.1
+# 🔒 HARE KRISHNA - Anonymizer Tool v1.2
 
 ![banner](https://img.shields.io/badge/Bash-Anonymizer-blue.svg) ![license](https://img.shields.io/badge/License-MIT-green.svg)
 
@@ -37,7 +37,7 @@ It combines **MAC address spoofing**, **IP obfuscation**, and **Tor-based routin
 ✅ Start/Stop anonymization sessions  
 ✅ System-wide proxy with Tor  
 ✅ Built-in log viewer  
-✅ Update checker (`--update`)  
+✅ Update checker (`-u`, `--update`)  
 ✅ Works on Kali, Parrot, Arch, Ubuntu, Debian, and more  
 ✅ Failsafe rollback on update failure  
 ✅ Clean CLI interface with banner, help, and status report
@@ -58,7 +58,8 @@ sudo ./setup.sh
 ➡️ After setup, run the tool via:
 
 ```bash
-sudo hare-krishna -h 
+sudo hare-krishna -h/--help (If system wide installed) or
+sudo bash hare-krishna -h/--help
 ```
 (To show arguments/help funciton)
 ---
@@ -66,15 +67,15 @@ sudo hare-krishna -h
 ## 💻 Usage
 
 ```bash
-sudo ./hare-krishna.sh -st           # Start anonymization
-sudo ./hare-krishna.sh -sp           # Stop and restore original state
-sudo ./hare-krishna.sh -cmc -m XX:XX:XX:XX:XX:XX   # Change MAC manually
-sudo ./hare-krishna.sh -cip          # Change IP via Tor
-sudo ./hare-krishna.sh -s            # Show anonymization status
-sudo ./hare-krishna.sh --cti         # To show your tor ip address 
-sudo ./hare-krishna.sh --logs        # View logs
-sudo ./hare-krishna.sh --update      # Update tool from GitHub
-sudo ./hare-krishna.sh --version     # Show tool version
+sudo ./hare-krishna.sh -st/--start          # Start anonymization
+sudo ./hare-krishna.sh -sp/--stop           # Stop and restore original state
+sudo ./hare-krishna.sh -cm -m XX:XX:XX:XX:XX:XX/--changemac XX:XX:XX:XX:XX:XX   # Change MAC manually
+sudo ./hare-krishna.sh -cp/--changeip       # Change IP via Tor
+sudo ./hare-krishna.sh -ss/--status         # Show anonymization status
+sudo ./hare-krishna.sh --cip/--checkip      # To show your tor ip address 
+sudo ./hare-krishna.sh -l/--logs            # View logs
+sudo ./hare-krishna.sh -u/--update          # Update tool from GitHub
+sudo ./hare-krishna.sh -v/--version         # Show tool version
 ```
 
 ---
@@ -83,17 +84,17 @@ sudo ./hare-krishna.sh --version     # Show tool version
 
 | Flag       | Description                             |
 |------------|-----------------------------------------|
-| `-st`      | Start anonymization                     |
-| `-sp`      | Stop and restore                        |
-| `-cmc -m`  | Change MAC to custom address            |
-| `-cip`     | Change IP (restart Tor)                 |
-| `-s`       | Show status                             |
-| `--logs`   | View log history                        |
-| `--cti`    | To see tor ip address                   |
-| `--update` | Check and apply updates (via Git)       |
-| `--version`| Show current version                    |
-| `--debug`  | Enable debug output                     |
-| `-h`       | Help / usage guide                      |
+| `-st`, `--start`      | Start anonymization                     |
+| `-sp`, `--stop`      | Stop and restore                        |
+| `-cm -m`, `--changemac`  | Change MAC to custom address            |
+| `-cp`, `--changeip`     | Change IP (restart Tor)                 |
+| `-ss`, `--status`       | Show status                             |
+| `-l`, `--logs`   | View log history                        |
+| `-cip`, `--checkip`    | To see tor ip address                   |
+| `-u`, `--update` | Check and apply updates (via Git)       |
+| `-v`, `--version`| Show current version                    |
+| `-d`, `--debug`  | Enable debug output                     |
+| `-h`, `--help`      | Help / usage guide                      |
 
 ---
 
