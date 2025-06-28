@@ -1,14 +1,14 @@
 #!/bin/bash
 
 # ─────────────────────────────────────────────
-# Anonymizer Script v1.1
+# Anonymizer Script v1.2
 # Author: CYBER-MRINAL
-# Date: 2025-06-25
+# Date: 2025-06-28
 # Description: Advanced MAC/IP/Tor anonymization tool
 # ─────────────────────────────────────────────
 
 # Global vars
-version="v1.1"
+version="v1.2"
 interface=""
 original_mac=""
 original_ip=""
@@ -41,17 +41,17 @@ usage() {
 Usage: $0 [OPTIONS]
 
 Options:
-  -st              Start anonymization
-  -sp              Stop anonymization
-  -cip             Change IP address (via Tor)
-  -cmc -m <mac>    Change MAC address to specific value
-  -s               Show anonymization status
-  --logs           View anonymizer logs
-  --debug          Enable debug output
-  --cti            Check your public ip address in tor
-  --version        Show Version of this script
-  --update         Update to latest version if avaliable
-  -h, --help       Show help message
+  -st, --start                 Start anonymization
+  -sp, --stop                  Stop anonymization
+  -cp, --changeip              Change IP address (via Tor)
+  -cm -m <mac>, --changemac    Change MAC address to specific value
+  -ss, --status                Show anonymization status
+  -l, --logs                   View anonymizer logs
+  -d, --debug                  Enable debug output
+  -cip, --checkip              Check your public ip address in tor
+  -v, --version                Show Version of this script
+  -u, --update                 Update to latest version if avaliable
+  -h, --help                   Show help message
 
 Example:
   sudo bash $0 -st
@@ -167,6 +167,9 @@ change_mac() {
 }
 
 change_ip() {
+    echo -e "\033[1;31m"
+    echo "[*] Wait a minute, Your IP address is changing......."
+    echo -e "\033[0m"
     sudo systemctl restart "$tor_service"
     sleep 5
     tor_ip=$(curl --max-time 10 -s --proxy socks5h://127.0.0.1:9050 http://api.ipify.org)
@@ -290,17 +293,17 @@ args=("$@")
 
 while [[ "$#" -gt 0 ]]; do
     case "$1" in
-        -st) start_anonymization; action_run=true ;;
-        -sp) stop_anonymization; action_run=true ;;
-        -cip) change_ip; action_run=true ;;
-        -cmc) shift; [[ -z "$1" ]] && { echo "MAC address missing."; exit 1; }; change_mac "$1"; action_run=true ;;
-        -s) status; action_run=true ;;
-        --logs) view_logs; exit 0 ;;
-        --debug) debug_mode=true ;;
+        -st|--start) start_anonymization; action_run=true ;;
+        -sp|--stop) stop_anonymization; action_run=true ;;
+        -cp|--changeip) change_ip; action_run=true ;;
+        -cm|--changemac) shift; [[ -z "$1" ]] && { echo "MAC address missing."; exit 1; }; change_mac "$1"; action_run=true ;;
+        -ss|--status) status; action_run=true ;;
+        -l|--logs) view_logs; exit 0 ;;
+        -d|--debug) debug_mode=true ;;
         -nb) show_banner=false ;;
-        -cti) check_ip_tor; action_run=true;;
-        --version) show_version; exit 0 ;;
-        --update) update_tool; exit 0 ;;
+        -cip|--checkip) check_ip_tor; action_run=true;;
+        -v|--version) show_version; exit 0 ;;
+        -u|--update) update_tool; exit 0 ;;
         -h|--help) usage ;;
         *) echo "Unknown option: $1"; usage ;;
     esac
