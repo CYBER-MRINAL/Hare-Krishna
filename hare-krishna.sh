@@ -199,7 +199,7 @@ check_ip_tor() {
     echo -e "\033[0m"
     sleep 5
     tor_ip=$(curl --max-time 10 -s --proxy socks5h://127.0.0.1:9050 http://api.ipify.org)
-    log "New Tor IP  : ${tor_ip:-Unavailable}"
+    log "YOUR TOR IP  : ${tor_ip:-Unavailable}"
 }
 
 trap_ctrlc() {
