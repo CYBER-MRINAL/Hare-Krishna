@@ -1,4 +1,4 @@
-# 🔒 HARE KRISHNA - Anonymizer Tool v1.2
+# 🔒 HARE KRISHNA - Anonymizer Tool v1.3
 
 ![banner](https://img.shields.io/badge/Bash-Anonymizer-blue.svg) ![license](https://img.shields.io/badge/License-MIT-green.svg)
 
@@ -37,7 +37,6 @@ It combines **MAC address spoofing**, **IP obfuscation**, and **Tor-based routin
 ✅ Start/Stop anonymization sessions  
 ✅ System-wide proxy with Tor  
 ✅ Built-in log viewer  
-✅ Update checker (`-u`, `--update`)  
 ✅ Works on Kali, Parrot, Arch, Ubuntu, Debian, and more  
 ✅ Failsafe rollback on update failure  
 ✅ Clean CLI interface with banner, help, and status report
@@ -74,7 +73,6 @@ sudo ./hare-krishna.sh -cp/--changeip       # Change IP via Tor
 sudo ./hare-krishna.sh -ss/--status         # Show anonymization status
 sudo ./hare-krishna.sh --cip/--checkip      # To show your tor ip address 
 sudo ./hare-krishna.sh -l/--logs            # View logs
-sudo ./hare-krishna.sh -u/--update          # Update tool from GitHub
 sudo ./hare-krishna.sh -v/--version         # Show tool version
 ```
 
@@ -91,7 +89,6 @@ sudo ./hare-krishna.sh -v/--version         # Show tool version
 | `-ss`, `--status`       | Show status                             |
 | `-l`, `--logs`   | View log history                        |
 | `-cip`, `--checkip`    | To see tor ip address                   |
-| `-u`, `--update` | Check and apply updates (via Git)       |
 | `-v`, `--version`| Show current version                    |
 | `-d`, `--debug`  | Enable debug output                     |
 | `-h`, `--help`      | Help / usage guide                      |
@@ -127,7 +124,6 @@ Always run as **root or with sudo**, and make sure to:
 | `Tor failed to start`       | `sudo systemctl restart tor` |
 | `MAC not changing`          | Ensure interface is down during change |
 | `No internet after start`   | Check DNS leaks or firewall rules |
-| `Update fails`              | Use `git pull` or re-clone manually |
 | `proxy-setting`             | Make sure you fix your browser and system proxy setting to use it. |
 
 --- 
