@@ -74,6 +74,7 @@ sudo ./hare-krishna.sh -ss/--status         # Show anonymization status
 sudo ./hare-krishna.sh --cip/--checkip      # To show your tor ip address 
 sudo ./hare-krishna.sh -l/--logs            # View logs
 sudo ./hare-krishna.sh -v/--version         # Show tool version
+sudo ./hare-kirhsna.sh -a/--auto            # Change ip in a gap of time
 ```
 
 ---
@@ -92,6 +93,7 @@ sudo ./hare-krishna.sh -v/--version         # Show tool version
 | `-v`, `--version`| Show current version                    |
 | `-d`, `--debug`  | Enable debug output                     |
 | `-h`, `--help`      | Help / usage guide                      |
+| `-a`, `--auto`      | Auto change ip address using secound                      |
 
 ---
 
