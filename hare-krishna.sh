@@ -1,14 +1,14 @@
 #!/bin/bash
 
 # ─────────────────────────────────────────────
-# Anonymizer Script v1.2
+# Anonymizer Script v1.3
 # Author: CYBER-MRINAL
 # Date: 2025-06-28
 # Description: Advanced MAC/IP/Tor anonymization tool
 # ─────────────────────────────────────────────
 
 # Global vars
-version="v1.2"
+version="v1.3"
 interface=""
 original_mac=""
 original_ip=""
@@ -29,7 +29,7 @@ log() {
 display_banner() {
     echo -e "\033[1;36m"
     echo "       ╔════════════════════════════════════════════╗"
-    echo "       ║            🔒 HARE KRISHNA  v1.2           ║"
+    echo "       ║            🔒 HARE KRISHNA  v1.3           ║"
     echo "       ╠════════════════════════════════════════════╣"
     echo "       ║  MAC/IP randomizer & Tor-based proxy tool  ║"
     echo "       ╚════════════════════════════════════════════╝"
@@ -50,8 +50,8 @@ Options:
   -d, --debug                  Enable debug output
   -cip, --checkip              Check your public ip address in tor
   -v, --version                Show Version of this script
-  -u, --update                 Update to latest version if avaliable
   -h, --help                   Show help message
+  -a, --auto                   Auto change ip and mac address as your time for infinity loop until you stop it
 
 Example:
   sudo bash $0 -st
@@ -214,71 +214,44 @@ view_logs() {
     [[ -f "$log_file" ]] && (echo -e "\033[0;34mLogs:\033[0m" && cat "$log_file") || echo "No logs found."
 }
 
-update_tool() {
-    log "Initiating update process..."
+auto_change_ip() {
+    detect_interface
+    save_original_state
 
-    # Check if git exists
-    if ! command -v git &>/dev/null; then
-        echo "❌ Git is not installed. Cannot update."
-        log "Update failed: git not found."
-        exit 1
-    fi
+    interval="${1:-300}"  # Default to 300 seconds (5 mins)
+    echo -e "\033[1;35m[INFO]\033[0m Starting advanced Tor IP changer. Interval: $interval seconds"
+    log "[#] Auto IP changer initialized. Will rotate IP every $interval seconds."
 
-    # Determine the script's directory
-    SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-    REPO_DIR="$(git -C "$SCRIPT_DIR" rev-parse --show-toplevel 2>/dev/null)"
+    while true; do
+        echo -e "\033[1;33m[*]\033[0m Restarting Tor service to request a new identity..."
+        sudo systemctl restart "$tor_service"
+        sleep 10
 
-    # Check if inside a Git repo
-    if [[ -z "$REPO_DIR" ]]; then
-        echo "❌ This is not a Git repository. Cannot perform self-update."
-        log "Update failed: .git directory missing."
-        exit 1
-    fi
+        # Loop to verify Tor is up and proxy is working
+        tor_ready=false
+        for attempt in {1..5}; do
+            echo -ne "\033[1;36m[~]\033[0m Checking Tor status (attempt $attempt)... "
+            test_ip=$(curl -s --max-time 10 --proxy socks5h://127.0.0.1:9050 http://ifconfig.me)
+            if [[ -n "$test_ip" ]]; then
+                tor_ready=true
+                break
+            else
+                echo "Unavailable"
+                sleep 5
+            fi
+        done
 
-    # Check if remote is reachable
-    if ! git -C "$REPO_DIR" ls-remote &>/dev/null; then
-        echo "❌ Remote repository not reachable. Check internet or repo URL."
-        log "Update failed: cannot reach remote."
-        exit 1
-    fi
+        if [[ "$tor_ready" = true ]]; then
+            log "[✓] New Tor IP: $test_ip"
+            echo -e "\033[1;32m[✓] New Tor IP: $test_ip\033[0m"
+        else
+            log "[✗] Failed to fetch new Tor IP after 5 attempts"
+            echo -e "\033[1;31m[✗] Tor did not respond in time. Skipping this cycle.\033[0m"
+        fi
 
-    # Backup script
-    cp "$SCRIPT_DIR/$(basename "$0")" "$SCRIPT_DIR/$(basename "$0").bak" 2>/dev/null || {
-        echo "❌ Failed to create backup. Update aborted."
-        log "Update failed: cannot create backup."
-        exit 1
-    }
-
-    # Fetch latest
-    if ! git -C "$REPO_DIR" fetch origin master &>/dev/null; then
-        echo "❌ Git fetch failed. Update aborted."
-        log "Update failed: git fetch origin master."
-        exit 1
-    fi
-
-    # Check if update needed
-    LOCAL_HASH=$(git -C "$REPO_DIR" rev-parse HEAD)
-    REMOTE_HASH=$(git -C "$REPO_DIR" rev-parse origin/master)
-
-    if [[ "$LOCAL_HASH" == "$REMOTE_HASH" ]]; then
-        echo "✅ Already up-to-date (version: $version)"
-        log "Already up-to-date."
-        exit 0
-    fi
-
-    # Perform the update
-    if git -C "$REPO_DIR" pull origin master --rebase; then
-        chmod +x "$SCRIPT_DIR/$(basename "$0")"
-        log "Update successful. Now running version: $version"
-        echo "✅ Update successful. Now running version: $version"
-        exit 0
-    else
-        echo "❌ Update failed. Restoring backup version..."
-        mv "$SCRIPT_DIR/$(basename "$0").bak" "$SCRIPT_DIR/$(basename "$0")"
-        chmod +x "$SCRIPT_DIR/$(basename "$0")"
-        log "Update failed. Restored previous version."
-        exit 1
-    fi
+        echo -e "\033[1;36m[*]\033[0m Sleeping for $interval seconds before next IP change...\n"
+        sleep "$interval"
+    done
 }
 
 # ─────────────────────────────────────────────
@@ -303,8 +276,8 @@ while [[ "$#" -gt 0 ]]; do
         -nb) show_banner=false ;;
         -cip|--checkip) check_ip_tor; action_run=true;;
         -v|--version) show_version; exit 0 ;;
-        -u|--update) update_tool; exit 0 ;;
         -h|--help) usage ;;
+        -a|--auto) shift; auto_change_ip "$1"; action_run=true ;;
         *) echo "Unknown option: $1"; usage ;;
     esac
     shift
