@@ -45,7 +45,7 @@ install_missing_packages() {
             PKG_INSTALL="sudo apt-get install -y"
             sudo apt-get update
             ;;
-        arch|manjaro|artix|athenaos)
+        arch|manjaro|artix|athenaos|garuda)
             PKG_INSTALL="sudo pacman -S --noconfirm"
             sudo pacman -Sy
             ;;
