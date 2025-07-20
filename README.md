@@ -97,6 +97,16 @@ sudo ./hare-kirhsna.sh -a/--auto            # Change ip in a gap of time
 
 ---
 
+## [^_^] Supported OS 
+
+- Kali Linux
+- Parrot os
+- Ubuntu os
+- Arch Linux
+- Athena os
+- Linux Mint
+- Garuda Linux
+
 ## 🔐 Security Considerations
 
 ⚠️ This tool **modifies your network interfaces**, routes traffic via **Tor**, and makes low-level system changes.  
